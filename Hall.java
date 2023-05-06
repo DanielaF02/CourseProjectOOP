@@ -14,7 +14,7 @@ public class Hall {
     public int seatsPerRow() {
         return seatsPerRow;
     }
-    
+
     public void setId(int newId) {
         this.id = newId;
     }
