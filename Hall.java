@@ -6,7 +6,10 @@ public class Hall {
     private int rowsCount;
     private int seatsPerRow;
 
+    // key - ред, value - Масив от резервирани места
     private final HashMap<Integer, ArrayList<Integer>> bookedSeats = new HashMap<Integer, ArrayList<Integer>>();
+
+    // key - ред, value - Масив от билети за купени места
     private final HashMap<Integer, ArrayList<BoughtTicket>> boughtSeats = new HashMap<Integer, ArrayList<BoughtTicket>>();
 
     public int getId() {
@@ -34,7 +37,6 @@ public class Hall {
         if (this.bookedSeats.containsKey(row)) {
             this.bookedSeats.get(row).add(seat);
         } else {
-
             ArrayList<Integer> seatList = new ArrayList<Integer>();
             seatList.add(seat);
             this.bookedSeats.put(row, seatList);

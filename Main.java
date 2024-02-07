@@ -1,4 +1,5 @@
 import org.w3c.dom.*;
+
 import java.io.File;
 import java.util.List;
 import java.util.Scanner;
@@ -107,7 +108,7 @@ public class Main {
         String fileName = commands[1];
         File file = new File(fileName);
         openFile = fileName;
-
+ // createNewFile създава файла, ако го няма или връща false ако го има
         if (file.createNewFile()) {
             Document doc = parser.getBuilder().newDocument();
             doc.appendChild(doc.createElement("data"));
@@ -171,7 +172,7 @@ public class Main {
             }
 
             int bookedTicketsCount = 0;
-            NodeList bookedTickets = document.getElementsByTagName("bought-ticket");
+            NodeList bookedTickets = document.getElementsByTagName("booked-ticket");
             for (int i = 0; i < bookedTickets.getLength(); i++) {
                 Node ticket = bookedTickets.item(i);
                 NamedNodeMap attrs = ticket.getAttributes();
@@ -183,11 +184,11 @@ public class Main {
             }
 
             Hall hall = data.getHalls().get(hallOfEvent);
-            int availableSeats = hall.getAllSeats();
-            availableSeats -= bookedTicketsCount + bookedTicketsCount;
+            int allSeats = hall.getAllSeats();
+            allSeats -= bookedTicketsCount + boughtTicketsCount;
 
-            if (availableSeats > 0) {
-                System.out.println("There are " + Integer.toString(availableSeats) + " available seats");
+            if (allSeats > 0) {
+                System.out.println("There are " + Integer.toString(allSeats) + " available seats");
             } else {
                 System.out.println("There are no available seats");
             }
@@ -238,6 +239,8 @@ public class Main {
             Hall hallOfEventObj = data.getHalls().get(hallOfEvent);
             BoughtTicket ticket = new BoughtTicket(paramRow, paramSeat, paramDate, paramName);
             if (hallOfEventObj.buyTicket(ticket)) {
+
+                // попълване с данни
                 Element boughtTicket = document.createElement("bought-ticket");
                 boughtTicket.setAttribute("row", Integer.toString(paramRow));
                 boughtTicket.setAttribute("seat", Integer.toString(paramSeat));
@@ -346,6 +349,7 @@ public class Main {
                 break;
             }
         }
+
         if (hallDoesntExist) {
             throw new Exception("This hall doesn't exist");
         }
